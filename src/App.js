@@ -1,12 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
 import FileSubmit from './components/FileSubmit';
+import {Route, Routes} from 'react-router-dom'
 
 function App() {
   return (
-    <>
-    <FileSubmit />
-    </>
+    <Routes>
+      <Route path='/' element={
+        <FileSubmit />
+      }/>
+    </Routes>
   );
 }
 

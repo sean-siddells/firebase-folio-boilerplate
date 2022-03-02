@@ -1,21 +1,24 @@
-import React, {useState} from 'react'
-import {db} from '../config.js'
+import React from 'react'
+import {storage, auth} from '../config.js'
+import { ref, uploadBytes } from 'firebase/storage'
 
 function FileSubmit () {
-  // const [fileUrl, setFileUrl] = useState(null)
 
-  // const onFileChange = async (e) => {
-  //   const file = e.target.files[0]
-  //   const storageRef= db.storage().ref()
-  //   const fileRef = storageRef.child(file.name)
-  //   await fileRef.put(file)
-  //  setFileUrl(await fileRef.getDownloadURL())
-  // }
+  const onFileChange = async (e) => {
+    const file = e.target.files[0]
+    const storageRef = ref(storage, file.name)
+    uploadBytes(storageRef, file)
+      .then ((snapshot) => {
+      console.log('Uploaded a file!', snapshot)
+    }).catch((error) => {
+      console.log('Failed to upload', error)
+    })
+  }
     return (
       <>
-      <div>
+      <div className='upload-container'>
         <form>
-          <input type='file' />
+          <input type='file' onChange={onFileChange} />
           <button>Submit</button>
         </form>
       </div>
